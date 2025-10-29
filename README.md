@@ -13,7 +13,6 @@ It functions as a central system for **DNS**, **DHCP**, and **SSH** access, and 
 | **DNS (BIND9)** | Resolves local domain names within the `innovate.lab` zone. |
 | **DHCP (Kea)** | Automatically assigns IP addresses to clients on the internal network. |
 | **Firewall (UFW)** | Restricts and filters network traffic to only required ports. |
-| **NTP (Chrony)** | Keeps the system clock synchronized with network time servers. |
 
 ---
 
