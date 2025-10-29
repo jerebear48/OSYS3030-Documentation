@@ -97,7 +97,7 @@ Both interfaces should show static addresses.
 ```bash
   ping 8.8.8.8
 ```
-6. Test DNS Resolution
+5. Test DNS Resolution
 ```bash
   ping google.com
 ```
@@ -119,3 +119,12 @@ Enable and configure UFW for secure access:
   sudo ufw allow 2222/tcp     # SSH
   sudo ufw enable
 ```
+
+📄 Files Included
+```
+  fw/
+  ├── README.md         # This file
+  └── 01-netcfg.yaml    # Example Netplan configuration
+```
+
+The server is now configured as a multi-homed system capable of routing traffic between two networks while applying firewall restrictions to control external access.
