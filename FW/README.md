@@ -1,7 +1,7 @@
 # Multi-Homed Network Configuration
 
 ## Objective
-In this lab, the server was configured with **two network interfaces** — one for external (WAN) access and one for internal (LAN) connectivity.  
+In this section, the server was configured with **two network interfaces** — one for external (WAN) access and one for internal (LAN) connectivity.  
 This setup allows the server to function like a gateway or firewall, separating internal and external traffic for improved security and control.
 
 ---
@@ -128,4 +128,5 @@ Files Included
 ```
 
 The server is now configured as a multi-homed system capable of routing traffic between two networks while applying firewall restrictions to control external access.
+
 
