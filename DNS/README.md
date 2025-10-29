@@ -1,35 +1,60 @@
-#  DNS Configuration — BIND9 on Ubuntu Server
+# DNS Configuration — BIND9 on Ubuntu Server
 
-##  Overview
-This directory documents the DNS configuration for the Ubuntu Server appliance.  
-The server uses **BIND9** to provide name resolution for the internal domain **`innovate.lab`** and includes a wildcard record for dynamic subdomain resolution.
-
----
-
-##  Service Description
-**Service:** Domain Name System (DNS)  
-**Software:** BIND9  
-**Domain:** `innovate.lab`  
-**Server IP:** `172.16.144.#`  
-**Primary Zone File:** `/etc/bind/db.innovate.lab`
-
-The server is authoritative for `innovate.lab` and handles internal lookups, CNAME records, and wildcard resolution for development subdomains.
+## Overview
+This directory contains configuration details for the **BIND9 DNS service** running on an Ubuntu Server VM.  
+The server hosts an internal DNS zone for **`innovate.lab`**, providing A, AAAA, CNAME, and wildcard records to support internal name resolution and testing.
 
 ---
 
-##  Configuration Details
+## Service Summary
+| Setting | Value |
+|----------|--------|
+| **Service** | BIND9 (named) |
+| **Domain** | `innovate.lab` |
+| **Server IP** | `172.16.144.100` |
+| **Zone File** | `/etc/bind/db.innovate.lab` |
+| **Config File** | `/etc/bind/named.conf.local` |
+| **Firewall Ports** | 53/UDP, 53/TCP |
 
-### Zone Declaration
-Defined in `/etc/bind/named.conf.local`:
+---
+
+## Configuration Process
+
+### 1️ Install Required Packages
+Install BIND9 and DNS utilities:
 ```bash
+sudo apt update
+sudo apt install bind9 dnsutils -y
+```
+Ensure the service is active:
+```
+sudo systemctl status bind9
+```
+## 2 Define the DNS Zone
+
+Open the local BIND configuration file:
+```
+sudo nano /etc/bind/named.conf.local
+```
+
+Add the following zone block:
+```
 zone "innovate.lab" {
     type master;
     file "/etc/bind/db.innovate.lab";
 };
 ```
+Save and exit.
 
-Zone File Example
-Located at /etc/bind/db.innovate.lab:
+## 3️ Create and Edit the Zone File
+
+Copy a default template and modify it for the innovate.lab domain:
+```
+sudo cp /etc/bind/db.local /etc/bind/db.innovate.lab
+sudo nano /etc/bind/db.innovate.lab
+```
+
+Example contents:
 ```
 ;
 ; BIND data file for innovate.lab
@@ -53,43 +78,42 @@ www     IN      A       172.16.144.100
 api     IN      A       172.16.144.100
 resolver IN     CNAME   ns1.innovate.lab.
 
-; Wildcard for undefined subdomains
+; Wildcard record
 *       IN      A       10.10.10.50
 
-; SPF record for mail integration
+; SPF record for outbound mail
 @       IN      TXT     "v=spf1 include:_spf.google.com ~all"
 ```
 
-## Verification Commands
-Check Configuration Syntax
+## Validate and Reload Configuration
+
+Run syntax checks to confirm there are no errors:
 ```
 sudo named-checkconf
 sudo named-checkzone innovate.lab /etc/bind/db.innovate.lab
 ```
-Reload BIND9
+
+If successful, reload the BIND9 service:
 ```
 sudo systemctl reload bind9
 sudo systemctl status bind9
 ```
-Test Record Resolution
+
+## Verification
+### Query Local DNS Records
+
+Use dig to confirm proper resolution:
 ```
 dig @localhost ns1.innovate.lab
 dig @localhost resolver.innovate.lab
 dig @localhost api.innovate.lab
 dig @localhost anything.innovate.lab
 ```
+Expected results:
 
-Expected Results:
-* Defined records (e.g., ns1, api, www) resolve to 172.16.144.100
-* Undefined subdomains (e.g., anything.innovate.lab) resolve to 10.10.10.50
-
-Notes
-* The wildcard record simplifies internal testing by resolving any undefined hostname within the innovate.lab zone.
-* SPF records are included for mail service compatibility with Google Apps.
-* Only port 53 (UDP/TCP) should be open through the firewall:
-```
-sudo ufw allow 53
-```
+* ns1, www, and api → resolve to 172.16.144.100
+* resolver → CNAME → ns1.innovate.lab
+*anything.innovate.lab → resolves to wildcard IP 10.10.10.50
 
 Files Included
 ```
@@ -98,3 +122,13 @@ dns/
 ├── named.conf.local
 └── db.innovate.lab
 ```
+
+## Summary
+This configuration enables the server to act as an internal authoritative DNS host for innovate.lab.
+It supports:
+* A / AAAA records for hosts
+* CNAMEs for internal aliasing
+* Wildcard resolution for dynamic subdomains
+* SPF record for mail service compatibility
+
+Together, these components provide a flexible and secure internal DNS service suitable for isolated lab and development environments.
