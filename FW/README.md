@@ -1,12 +1,12 @@
-# 🌐 Multi-Homed Network Configuration
+# Multi-Homed Network Configuration
 
-## 🎯 Objective
+## Objective
 In this lab, the server was configured with **two network interfaces** — one for external (WAN) access and one for internal (LAN) connectivity.  
 This setup allows the server to function like a gateway or firewall, separating internal and external traffic for improved security and control.
 
 ---
 
-## 🧰 Virtual Hardware Setup
+## Virtual Hardware Setup
 The server runs as a virtual machine on **Proxmox VE (PVE)** with **two network adapters** assigned:
 
 | Interface | Role | Description |
@@ -18,7 +18,7 @@ If running on other hypervisors (VMware or VirtualBox), a second adapter must be
 
 ---
 
-## 🔍 Part 1 — Gather Network Information
+## Part 1 — Gather Network Information
 
 Before editing configuration files, record current network details.
 
@@ -39,7 +39,7 @@ Primary IP Address: __________________
 Default Gateway: __________________
 DNS Server: __________________
 
-⚙️ Part 2 — Configure Static Networking
+## Part 2 — Configure Static Networking
 
 Edit the Netplan configuration file to make the IP settings permanent.
 ```bash
@@ -80,7 +80,7 @@ Apply the configuration:
 ```
 Netplan will display an error message if there are syntax issues.
 
-Part 3 — Verification
+## Part 3 — Verification
 
 1. Check IP Addresses
 ```bash
@@ -109,7 +109,7 @@ If all four tests pass:
 * Internet connectivity works
 * DNS resolution succeeds
 
-Part 4 — Basic Firewall Setup
+## Part 4 — Basic Firewall Setup
 
 Enable and configure UFW for secure access:
 ```
@@ -120,7 +120,7 @@ Enable and configure UFW for secure access:
   sudo ufw enable
 ```
 
-📄 Files Included
+Files Included
 ```
   fw/
   ├── README.md         # This file
@@ -128,3 +128,4 @@ Enable and configure UFW for secure access:
 ```
 
 The server is now configured as a multi-homed system capable of routing traffic between two networks while applying firewall restrictions to control external access.
+
