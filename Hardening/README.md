@@ -139,7 +139,7 @@ Check Open Ports
 Review that only expected ports (e.g. 2222) are open.
 -  Review firewall rules regularly as new services are added.
 
-📄 Files Included
+ Files Included
 ```
   hardening/
   ├── README.md        # This file
@@ -157,4 +157,5 @@ By following these steps, the server now:
 * Implements standard system audit practices
 
 These steps establish a secure, maintainable baseline for all future configuration work.
+
 
