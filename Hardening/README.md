@@ -1,6 +1,6 @@
-# 🔐 Post-Installation and Server Hardening
+# Post-Installation and Server Hardening
 
-## 🧭 Overview
+##  Overview
 This lab focuses on the critical steps performed **immediately after installing Ubuntu Server 22.04 LTS** on a Proxmox virtual machine.  
 The goal is to secure remote access, lock down user permissions, keep software updated, and implement a basic firewall.  
 These actions form the foundation of good configuration management and server hygiene.
@@ -157,3 +157,4 @@ By following these steps, the server now:
 * Implements standard system audit practices
 
 These steps establish a secure, maintainable baseline for all future configuration work.
+
