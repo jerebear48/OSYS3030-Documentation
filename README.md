@@ -1,13 +1,13 @@
-# 🖥️ Server Configuration Appliance
+# Server Configuration Appliance
 
-## 📘 Description
+## Description
 This server is an **Ubuntu Server 22.04 LTS** appliance running as a virtual machine on a **Proxmox Virtual Environment (PVE)** host.  
 It was created for lab use to practice system configuration management and network service setup.  
 The server demonstrates essential administration tasks such as SSH hardening, firewall configuration, and static IP management across dual network interfaces.
 
 ---
 
-## 🌐 Network Services Overview
+## Network Services Overview
 | Service | Description |
 |----------|-------------|
 | **SSH** | Provides secure remote access using key-based authentication and a custom port. |
@@ -17,7 +17,7 @@ The server demonstrates essential administration tasks such as SSH hardening, fi
 
 ---
 
-## 🧭 Network Topology
+## Network Topology
 This appliance supports two network interfaces — one for WAN access and one for LAN connectivity.
 
 [ Clients ] ←→ [ ens19: LAN (10.x.x.0/24) ] ←→ [ Ubuntu Server ] ←→ [ ens18: WAN (172.16.144.0/24) ] ←→ [ Internet ]
